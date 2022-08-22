@@ -130,14 +130,18 @@ def viewissuedbook_view(request):
         issdate=str(ib.issuedate.day)+'-'+str(ib.issuedate.month)+'-'+str(ib.issuedate.year)
         expdate=str(ib.expirydate.day)+'-'+str(ib.expirydate.month)+'-'+str(ib.expirydate.year)
         #fine calculation
-        days=(date.today()-ib.issuedate)
+        days=(date.today()-ib.expirydate)
         print(date.today())
         d=days.days
         fine=0
-        if d>15:
-            day=d-15
-            fine=day*1500
-
+        if d==3:
+            fine=5000
+        elif d== 10:
+            fine=15000
+        elif d <= 0:
+            fine=0
+        else:
+            fine=d*1500
 
         books=list(models.Book.objects.filter(isbn=ib.isbn))
         students=list(models.StudentExtra.objects.filter(enrollment=ib.enrollment))
@@ -173,13 +177,18 @@ def viewissuedbookbystudent(request):
         issdate=str(ib.issuedate.day)+'-'+str(ib.issuedate.month)+'-'+str(ib.issuedate.year)
         expdate=str(ib.expirydate.day)+'-'+str(ib.expirydate.month)+'-'+str(ib.expirydate.year)
         #fine calculation
-        days=(date.today()-ib.issuedate)
+        days=(date.today()-ib.expirydate)
         print(date.today())
         d=days.days
         fine=0
-        if d>15:
-            day=d-15
-            fine=day*1500
+        if d==3:
+            fine=5000
+        elif d== 10:
+            fine=15000
+        elif d <= 0:
+            fine=0
+        else:
+            fine=d*1500
         t=(issdate,expdate,fine)
         li2.append(t)
 
